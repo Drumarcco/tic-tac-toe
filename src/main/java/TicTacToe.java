@@ -16,7 +16,8 @@ public class TicTacToe {
         "258",
         "369",
         "139",
-        "357"
+        "357",
+        "159"
     };
 
     public TicTacToe(boolean humanStarts) {
@@ -53,14 +54,15 @@ public class TicTacToe {
         }
     }
 
-    public void doCpuMovement() {
+    public int doCpuMovement() {
         int optimalPosition = 0;
-        while (!isMovementPossible(optimalPosition)) {
+        while (!isMovementPossible(optimalPosition) && currentTurn < 9) {
             optimalPosition = getOptimalPosition();
         }
 
         cpu.setPosition(optimalPosition);
         currentTurn++;
+        return optimalPosition;
     }
 
     private int getOptimalPosition() {
@@ -84,4 +86,17 @@ public class TicTacToe {
 
         return false;
     }
+
+    public boolean humanWon() {
+        return playerWon(human);
+    }
+
+    public boolean cpuWon() {
+        return playerWon(cpu);
+    }
+
+    public boolean isDraw() {
+        return currentTurn > 9;
+    }
+
 }
