@@ -1,3 +1,5 @@
+import java.util.Random;
+
 /**
  * Created by marco on 21/09/16.
  */
@@ -31,7 +33,7 @@ public class TicTacToe {
         return this.cpu;
     }
 
-    private boolean isHumanTurn() {
+    public boolean isHumanTurn() {
         if (humanStarted) {
             return currentTurn % 2 == 0;
         } else {
@@ -40,22 +42,32 @@ public class TicTacToe {
     }
 
     public boolean isMovementPossible(int position) {
-        return human.hasPosition(position) || cpu.hasPosition(position);
+        if (position < 1 || position > 9) return false;
+        return !(human.hasPosition(position) || cpu.hasPosition(position));
     }
 
-    public boolean doMovement(int position) {
-        if (isMovementPossible(position)) return false;
-
-        if (isHumanTurn()) {
+    public void doHumanMovement(int position) {
+        if (isMovementPossible(position)) {
             human.setPosition(position);
-        } else {
-            cpu.setPosition(position);
+            currentTurn++;
+        }
+    }
+
+    public void doCpuMovement() {
+        int optimalPosition = 0;
+        while (!isMovementPossible(optimalPosition)) {
+            optimalPosition = getOptimalPosition();
         }
 
+        cpu.setPosition(optimalPosition);
         currentTurn++;
-        return true;
     }
-    
+
+    private int getOptimalPosition() {
+        Random random = new Random();
+        return random.nextInt(10) + 1;
+    }
+
     public boolean playerWon(Player player) {
         if (player.countMovements() < 3) return false;
 

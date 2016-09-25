@@ -1,9 +1,10 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Player {
 
     private boolean isHuman;
-    private ArrayList<Integer> positions;
+    List<Integer> positions;
 
     public Player(boolean isHuman) {
         this.isHuman = isHuman;
