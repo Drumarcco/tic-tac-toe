@@ -15,7 +15,6 @@ public class TicTacToe {
         "147",
         "258",
         "369",
-        "139",
         "357",
         "159"
     };
@@ -24,14 +23,6 @@ public class TicTacToe {
         human = new Player(true);
         cpu = new Player(false);
         humanStarted = humanStarts;
-    }
-
-    public Player getHuman() {
-        return this.human;
-    }
-
-    public Player getCpu() {
-        return this.cpu;
     }
 
     public boolean isHumanTurn() {
@@ -54,10 +45,10 @@ public class TicTacToe {
         }
     }
 
-    public int doCpuMovement() {
+    public int doCpuMovement(int lastHumanMovement) {
         int optimalPosition = 0;
         while (!isMovementPossible(optimalPosition) && currentTurn < 9) {
-            optimalPosition = getOptimalPosition();
+            optimalPosition = getOptimalPosition(lastHumanMovement);
         }
 
         cpu.setPosition(optimalPosition);
@@ -65,9 +56,44 @@ public class TicTacToe {
         return optimalPosition;
     }
 
-    private int getOptimalPosition() {
+    private int getOptimalPosition(int lastHumanMovement) {
+        int blockingMovement = getBlockingMovement(lastHumanMovement);
+
+        if (blockingMovement > 0) {
+            return blockingMovement;
+        }
+
         Random random = new Random();
         return random.nextInt(10) + 1;
+    }
+
+    private int getBlockingMovement(int lastHumanMovement) {
+        if (human.countMovements() < 2) return 0;
+
+        for (String winningCase : WINNING_CASES) {
+            if (!winningCase.contains(String.valueOf(lastHumanMovement))) continue;
+
+            int blockingPosition = 0;
+            int matchingPositionsCount = 0;
+
+            for (String positionString : winningCase.split("")) {
+                int position = Integer.valueOf(positionString);
+
+                if (human.hasPosition(position)) {
+                    matchingPositionsCount++;
+                } else {
+                    if (isMovementPossible(position)) {
+                        blockingPosition = position;
+                    }
+                }
+
+                if (matchingPositionsCount == 2 && blockingPosition != 0) {
+                    return blockingPosition;
+                }
+            }
+        }
+
+        return 0;
     }
 
     public boolean playerWon(Player player) {

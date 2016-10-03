@@ -65,7 +65,7 @@ public class TicTacToeView {
                 return;
             }
 
-            int cpuMovement = ticTacToe.doCpuMovement();
+            int cpuMovement = ticTacToe.doCpuMovement(position);
             paintMovement(cpuMovement);
 
             if (ticTacToe.cpuWon()) {

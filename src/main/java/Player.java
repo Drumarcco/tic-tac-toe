@@ -4,7 +4,7 @@ import java.util.List;
 public class Player {
 
     private boolean isHuman;
-    List<Integer> positions;
+    private List<Integer> positions;
 
     public Player(boolean isHuman) {
         this.isHuman = isHuman;
