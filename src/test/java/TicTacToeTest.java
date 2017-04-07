@@ -14,21 +14,6 @@ public class TicTacToeTest {
     }
 
     @Test
-    public void humanShouldWin() {
-        ticTacToe.doHumanMovement(1);
-        ticTacToe.doCpuMovement();
-        ticTacToe.doHumanMovement(2);
-        ticTacToe.doCpuMovement();
-        ticTacToe.doHumanMovement(3);
-
-        Player human = ticTacToe.getHuman();
-        Player cpu = ticTacToe.getCpu();
-
-        Assert.assertEquals(true, ticTacToe.playerWon(human));
-        Assert.assertEquals(false, ticTacToe.playerWon(cpu));
-    }
-
-    @Test
     public void movementShouldNotBeRepeated() {
         ticTacToe.doHumanMovement(1);
 

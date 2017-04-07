@@ -58,10 +58,6 @@ public class TicTacToe {
     }
 
     private int getOptimalPosition(int lastHumanMovement) {
-        if (isMovementPossible(BEST_POSITION)) {
-            return BEST_POSITION;
-        }
-
         int winningMovement = getWinningMovement();
 
         if (winningMovement > 0) {
@@ -74,15 +70,38 @@ public class TicTacToe {
             return blockingMovement;
         }
 
+        if (isMovementPossible(BEST_POSITION)) {
+            return BEST_POSITION;
+        }
+
+        if (formedCornerLine(lastHumanMovement)) {
+            return getEdge();
+        }
+
         int corner = getCornerPosition(lastHumanMovement);
 
         if (corner > 0) {
             return corner;
         }
 
-
         Random random = new Random();
         return random.nextInt(10) + 1;
+    }
+
+    private int getEdge() {
+        if (isMovementPossible(2)) return 2;
+        if (isMovementPossible(4)) return 4;
+        if (isMovementPossible(6)) return 6;
+        if (isMovementPossible(8)) return 8;
+        return 0;
+    }
+
+    private boolean formedCornerLine(int lastHumanMovement) {
+        if (lastHumanMovement == 1 && human.hasPosition(9)) return true;
+        if (lastHumanMovement == 3 && human.hasPosition(7)) return true;
+        if (lastHumanMovement == 7 && human.hasPosition(3)) return true;
+        if (lastHumanMovement == 9 && human.hasPosition(1)) return true;
+        return false;
     }
 
     private int getCornerPosition(int lastHumanMovement) {

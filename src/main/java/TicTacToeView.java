@@ -23,7 +23,7 @@ public class TicTacToeView {
     private JButton btn_9;
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Tic Tac Toe - Dumb implementation");
+        JFrame frame = new JFrame("Tic Tac Toe - Smart implementation");
         frame.setContentPane(new TicTacToeView().rootPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
